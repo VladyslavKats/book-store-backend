@@ -15,17 +15,17 @@ Entities :
 - User
 
 Roles : 
-
 - User :
-  a) Register 
-  b) Buy book
-  c) Comment 
-  d) Evualate a book
-  
 - Administrator : 
-  a) Sign in
-  b) CRUD for entities
-  c) Delete user
   
+User can :
+- Register 
+- Buy book
+- Create comment 
+- Evualate a book
 
-
+Administrator can :
+- Sign in
+- CRUD for entities
+- Delete user
+  

@@ -10,6 +10,8 @@
 
         public string Description { get; set; }
 
+        public bool IsDeleted { get; set; }
+
         public ICollection<BookEntity> Books { get; set; }
 
         public ICollection<BookAuthorEntity> BookAuthor { get; set; }

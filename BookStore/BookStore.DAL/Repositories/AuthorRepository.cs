@@ -9,13 +9,17 @@ namespace BookStore.DAL.Repositories
         {
         }
 
-        public override async Task DeleteAsync(AuthorEntity entity)
+        public override Task DeleteAsync(AuthorEntity entity)
         {
-            await Task.Run(() =>
-            {
-                _entities.Attach(entity);
-                entity.IsDeleted = true;
-            });
+            _entities.Attach(entity);
+            entity.IsDeleted = true;
+            return Task.CompletedTask;
+        }
+
+        public override async Task<IEnumerable<AuthorEntity>> GetAllAsync(string includeProperies = "")
+        {
+            var authors = await base.GetAllAsync(includeProperies);
+            return authors.Where(a => !a.IsDeleted);
         }
     }
 }

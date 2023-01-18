@@ -9,7 +9,9 @@ namespace BookStore.DAL.Configurations
         public void Configure(EntityTypeBuilder<AuthorEntity> builder)
         {
             builder.HasKey(x => x.Id);
-            
+            builder
+                .Property(x => x.Id)
+                .ValueGeneratedOnAdd();
         }
     }
 }

@@ -1,6 +1,8 @@
-﻿namespace BookStore.DAL.Entities
+﻿using BookStore.DAL.Interfaces;
+
+namespace BookStore.DAL.Entities
 {
-    public class OrderEntity
+    public class OrderEntity : IBaseEntity<string>
     {
         public string Id { get; set; }
 

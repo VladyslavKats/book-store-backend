@@ -1,7 +1,15 @@
-﻿namespace BookStore.DAL.Entities
+﻿using BookStore.DAL.Interfaces;
+
+namespace BookStore.DAL.Entities
 {
-    public class BookEntity : EntityWithCreatedAtField
+    public class BookEntity : EntityWithCreatedAtField , IBaseEntity<string>
     {
+        public BookEntity()
+        {
+            Genres = new List<GenreEntity>();
+            Authors = new List<AuthorEntity>();
+        }
+
         public string Id { get; set; }
 
         public string Name { get; set; }
@@ -22,7 +30,11 @@
 
         public double Rating { get; set; }
 
+        public long Evaluaions { get; set; }
+
         public string LanguageId { get; set; }
+
+        public string PublisherId { get; set; }
 
         public LanguageEntity Language { get; set; }
 
@@ -37,5 +49,7 @@
         public ICollection<OrderDetailEntity> OrderDetails { get; set; }
 
         public ICollection<GenreEntity> Genres { get; set; }
+
+        public PublisherEntity Publisher { get; set; }
     }
 }

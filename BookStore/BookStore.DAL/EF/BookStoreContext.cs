@@ -1,10 +1,12 @@
 ﻿using BookStore.DAL.Configurations;
 using BookStore.DAL.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookStore.DAL.EF
 {
-    public class BookStoreContext : DbContext
+    public class BookStoreContext : IdentityDbContext
     {
         public BookStoreContext(DbContextOptions<BookStoreContext> options) : base(options)
         {
@@ -21,6 +23,8 @@ namespace BookStore.DAL.EF
 
         public DbSet<CommentEntity> Comments { get; set; }
 
+        public DbSet<PublisherEntity> Publishers { get; set; }
+
         public DbSet<OrderEntity> Orders { get; set; }
 
         public DbSet<OrderDetailEntity> OrderDetails { get; set; }
@@ -28,6 +32,7 @@ namespace BookStore.DAL.EF
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(BookConfiguration).Assembly);
+            base.OnModelCreating(modelBuilder);
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

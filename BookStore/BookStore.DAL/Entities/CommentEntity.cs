@@ -1,6 +1,8 @@
-﻿namespace BookStore.DAL.Entities
+﻿using BookStore.DAL.Interfaces;
+
+namespace BookStore.DAL.Entities
 {
-    public class CommentEntity : EntityWithCreatedAtField
+    public class CommentEntity : EntityWithCreatedAtField, IBaseEntity<string>
     {
         public string Id { get; set; }
 

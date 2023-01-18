@@ -14,10 +14,12 @@ namespace BookStore.DAL.Interfaces
 
         public IRepository<string , LanguageEntity> Languages { get; }
 
+        public IRepository<string,PublisherEntity> Publishers { get; }
+
         public IRepository<string , OrderEntity> Orders { get; }
 
         public IRepository<string , OrderDetailEntity> OrderDetails { get; }
 
-        Task CommitAsync();
+        Task CommitAsync(CancellationToken token = default);
     }
 }

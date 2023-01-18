@@ -2,7 +2,7 @@
 
 namespace BookStore.DAL.Interfaces
 {
-    public interface IRepository<TKey,TEntity>
+    public interface IRepository<TKey,TEntity> where TEntity : IBaseEntity<TKey>
     {
         Task<TEntity> GetAsync(Expression<Func<TEntity , bool>> filter , string includeProperies = "");
 

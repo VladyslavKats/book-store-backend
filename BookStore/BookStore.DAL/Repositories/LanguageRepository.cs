@@ -9,13 +9,17 @@ namespace BookStore.DAL.Repositories
         {
         }
 
-        public override async Task DeleteAsync(LanguageEntity entity)
+        public override Task DeleteAsync(LanguageEntity entity)
         {
-            await Task.Run(() =>
-            {
-                _entities.Attach(entity);
-                entity.IsDeleted = true;
-            });
+            _entities.Attach(entity);
+            entity.IsDeleted = true;
+            return Task.CompletedTask;
+        }
+
+        public override async Task<IEnumerable<LanguageEntity>> GetAllAsync(string includeProperies = "")
+        {
+            var languages = await base.GetAllAsync(includeProperies);
+            return languages.Where(l => !l.IsDeleted);
         }
     }
 }

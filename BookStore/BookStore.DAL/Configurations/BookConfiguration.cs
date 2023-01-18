@@ -10,6 +10,9 @@ namespace BookStore.DAL.Configurations
         {
             builder.HasKey(x => x.Id);
             builder
+                .Property(x => x.Id)
+                .ValueGeneratedOnAdd();
+            builder
                 .HasMany(x => x.Genres)
                 .WithMany(x => x.Books)
                 .UsingEntity<BookGenreEntity>(

@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace BookStore.DAL.Repositories
 {
-    public class GenericRepository<Tkey, TEntity> : IRepository<Tkey, TEntity> where TEntity : class
+    public class GenericRepository<Tkey, TEntity> : IRepository<Tkey, TEntity> where TEntity : class ,IBaseEntity<Tkey>
     {
         protected readonly DbSet<TEntity> _entities;
         protected readonly BookStoreContext _context;
@@ -28,16 +28,14 @@ namespace BookStore.DAL.Repositories
             await DeleteAsync(entity);
         }
 
-        public async virtual Task DeleteAsync(TEntity entity)
+        public  virtual Task DeleteAsync(TEntity entity)
         {
-            await Task.Run(() =>
+            if (_context.Entry(entity).State == EntityState.Detached)
             {
-                if (_context.Entry(entity).State == EntityState.Detached)
-                {
-                    _entities.Attach(entity);
-                }
-                _entities.Remove(entity);
-            });
+                _entities.Attach(entity);
+            }
+            _entities.Remove(entity);
+            return Task.CompletedTask;
         }
 
         public virtual async Task<IEnumerable<TEntity>> GetAllAsync(string includeProperies = "")
@@ -82,17 +80,14 @@ namespace BookStore.DAL.Repositories
                 }
             }
             query = query.AsNoTracking();
-            return await ((DbSet<TEntity>)query).FindAsync(id);
+            return await query.FirstOrDefaultAsync(entity => entity.Id.Equals(id));
         }
 
         public virtual async Task<TEntity> UpdateAsync(TEntity entity)
         {
-            return await Task.Run(() =>
-            {
-                _entities.Attach(entity);
-                _context.Entry(entity).State = EntityState.Modified;
-                return entity;
-            });
+            _entities.Attach(entity);
+            _context.Entry(entity).State = EntityState.Modified;
+            return await Task.FromResult(entity);
         }
     }
 }
